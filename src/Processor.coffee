@@ -21,7 +21,7 @@ module.exports = class Processor
 		i1 = new Image @context.getImageData @offsetX, @offsetY, @width, @height
 		i2 = new Image @context.getImageData @offsetX, @offsetY, @width, @height
 
-		# grabbedCanvas.getContext('2d').putImageData i1.imageData, 0, 0
+		grabbedCanvas.getContext('2d').putImageData i1.imageData, 0, 0
 
 		i1.filter @kernels.gx
 		i2.filter @kernels.gy
@@ -30,11 +30,11 @@ module.exports = class Processor
 
 		i1.threshold 50
 		
-		# thresholdedCanvas.getContext('2d').putImageData i1.output(), 0, 0
+		thresholdedCanvas.getContext('2d').putImageData i1.output(), 0, 0
 
-		# i1.thin()
+		i1.thin()
 
-		# thinnedCanvas.getContext('2d').putImageData i1.output(), 0, 0
+		thinnedCanvas.getContext('2d').putImageData i1.output(), 0, 0
 
 		console.info "Took", Date.now() - window.start
 
