@@ -1,0 +1,13 @@
+{
+  "name": "CardGrabber.js",
+  "version": "0.0.1",
+  "devDependencies": {
+		"coffee-script": "",
+		"coffee-reactify": "",
+		"gulp": "",
+		"gulp-browserify": "",
+		"gulp-rename": "",
+		"gulp-plumber": "",
+		"gulp-load-plugins": ""
+  }
+}
