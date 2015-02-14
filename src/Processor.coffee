@@ -24,6 +24,7 @@ module.exports = class Processor
 		id1 = @context.getImageData @offsetX, @offsetY, @width, @height
 		id2 = @context.getImageData @offsetX, @offsetY, @width, @height
 
+<<<<<<< HEAD
 		i1 = @imageDataToImage id1
 		i2 = @imageDataToImage id2
 
@@ -36,7 +37,6 @@ module.exports = class Processor
 
 		i1.filter @kernels.gaussianY 1
 		i2.filter @kernels.gaussian
-
 
 		# i1.filter @kernels.gx
 		# i2.filter @kernels.gy
