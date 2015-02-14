@@ -78,23 +78,3 @@ module.exports = class Processor
 				imageData.data[i+2] = val[2]
 
 		return imageData
-
-	neighbours: (image) ->
-		(x, y) ->
-			[
-				image x-1, y-1
-				image x, y-1
-				image x+1, y-1
-				image x-1, y
-				image x+1, y
-				image x-1, y+1
-				image x, y+1
-				image x+1, y+1
-			]
-
-	normalize: (min = 0, max = 255) ->
-		max -= min
-		(val) ->
-			if val > max then val = max
-			if val < min then val = min
-			255 - Math.round(255 * ((val - min) / max))

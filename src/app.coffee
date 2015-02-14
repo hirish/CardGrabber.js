@@ -1,5 +1,4 @@
 CardGrabber = require './CardGrabber.coffee'
-Classifier = require './Classifier.coffee'
 Processor = require './Processor.coffee'
 
 window.addEventListener "DOMContentLoaded", (->
