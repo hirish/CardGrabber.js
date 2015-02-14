@@ -22,14 +22,9 @@ window.addEventListener "DOMContentLoaded", (->
 		processor = new Processor cardCanvas
 	), 100
 	# window.cardGrabber = new CardGrabber canvas, video, processor, 200
+	
+	window.gaussian = (s) -> (x, y) ->
+		(1 / (2 * Math.PI * s**2)) * Math.exp(-(x**2 + y**2)/(2 * s**2))
+
 
 ), false
-
-# document.getElementById("snap").addEventListener "click", ->
-# 	console.log "Snapping"
-# 	setInterval (->
-# 		context.drawImage video, 0, 0, 640, 480
-# 		context.rect 0, 0, 100, 100
-# 		context.fillStyle = 'yellow'
-# 		context.fill()
-# 	), 40

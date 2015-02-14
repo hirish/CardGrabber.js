@@ -1,24 +1,5 @@
 module.exports = class Image
-	constructor: (@imageData) ->
-		@width = @imageData.width
-		@height = @imageData.height
-
-		@data =
-			for x in [0...@width]
-				for y in [0...@height]
-					i = @_coordsToIndex x, y
-					Math.round(
-						(@imageData.data[i] + @imageData.data[i+1] + @imageData.data[i+2]) / 3
-					)
-	
-	_coordsToIndex: (x, y) ->
-		4 * ((y * @width) + x)
-
-	_indexToCoords: (i) ->
-		i = i / 4
-		x = i % @width
-		y = (i - x) / @height
-		[x, y]
+	constructor: (@data, @width, @height) ->
 	
 	getPixel: (x, y) ->
 		@data[x][y]
@@ -29,6 +10,10 @@ module.exports = class Image
 	filter: (kernel) ->
 		M = kernel.length
 		N = kernel[0].length
+
+		flattened = kernel.reduce (x, y) -> x.concat(y)
+		total = flattened.reduce (x, y) -> x + y
+		multiplier = 1 / (total or 1)
 		
 		@data =
 			for x in [0...@width]
@@ -39,6 +24,7 @@ module.exports = class Image
 						for m in [0...M]
 							for n in [0...N]
 								sum += kernel[m][n] * @getPixel(x-m, y-n)
+						sum = ~~(sum * multiplier)
 						Math.abs(sum)
 
 	map: (fn) ->
@@ -53,6 +39,10 @@ module.exports = class Image
 	add: (image) ->
 		@map (v, x, y) -> v + image.getPixel x, y
 
+	# Returns a list of neighbours, from above the position, then closewise around
+	# until above-left of the position.
+	# Padded with two empty neighbours before so indexes correspond to thinning
+	# algorithm appropriately.
 	neighbours: (x, y) ->
 		[
 			0
@@ -95,14 +85,3 @@ module.exports = class Image
 
 		if toDelete.length
 			@thin(not iter)
-
-	
-	output: ->
-		for x in [0...@width]
-			for y in [0...@height]
-				i = @_coordsToIndex x, y # 4 bits per coord atm
-				val = if @getPixel(x, y) is 1 then 255 else 0
-				@imageData.data[i] = val
-				@imageData.data[i+1] = val
-				@imageData.data[i+2] = val
-		return @imageData
